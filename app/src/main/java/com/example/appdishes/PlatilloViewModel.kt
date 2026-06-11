@@ -13,7 +13,7 @@ class PlatilloViewModel : ViewModel() {
             "Pizza familiar con abundante pepperoni.",
             12.50,
             "Pizzas",
-            ""
+            "https://images.unsplash.com/photo-1513104890138-7c749659a591"
         ),
 
         Platillo(
@@ -22,7 +22,7 @@ class PlatilloViewModel : ViewModel() {
             "Pizza con jamón y piña.",
             13.00,
             "Pizzas",
-            ""
+            "https://images.unsplash.com/photo-1594007654729-407eedc4be65"
         ),
 
         Platillo(
@@ -31,7 +31,7 @@ class PlatilloViewModel : ViewModel() {
             "Pizza con carnes y vegetales.",
             14.50,
             "Pizzas",
-            ""
+            "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38"
         ),
 
         Platillo(
@@ -40,7 +40,7 @@ class PlatilloViewModel : ViewModel() {
             "Hamburguesa de res con queso.",
             8.50,
             "Hamburguesas",
-            ""
+            "https://images.unsplash.com/photo-1568901346375-23c9450c58cd"
         ),
 
         Platillo(
@@ -49,7 +49,7 @@ class PlatilloViewModel : ViewModel() {
             "Hamburguesa con salsa BBQ.",
             9.50,
             "Hamburguesas",
-            ""
+            "https://images.unsplash.com/photo-1550547660-d9450f859349"
         ),
 
         Platillo(
@@ -58,7 +58,7 @@ class PlatilloViewModel : ViewModel() {
             "Doble carne y doble queso.",
             11.00,
             "Hamburguesas",
-            ""
+            "https://images.unsplash.com/photo-1571091718767-18b5b1457add"
         )
     )
 
