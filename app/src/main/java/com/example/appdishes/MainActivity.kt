@@ -9,12 +9,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.appdishes.ui.theme.AppDishesTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -40,7 +42,7 @@ fun AppNavigation() {
 
     val navController = rememberNavController()
 
-    val biteBoxViewModel: BiteBoxViewModel = viewModel()
+    val biteBoxViewModel: PlatilloViewModel = viewModel()
 
     NavHost(
         navController = navController,
@@ -95,8 +97,8 @@ fun AppNavigation() {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    AppDishesTheme {
-        Greeting("Android")
+fun DishesAppPreview() {
+    AppDishesTheme{
+        AppNavigation()
     }
 }
