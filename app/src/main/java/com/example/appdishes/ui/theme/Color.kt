@@ -2,10 +2,16 @@ package com.example.appdishes.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Food Theme Palette
+val FoodOrange = Color(0xFFFF5722)
+val FoodOrangeVariant = Color(0xFFE64A19)
+val FoodAmber = Color(0xFFFFC107)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val FoodDark = Color(0xFF121212)
+val FoodSurfaceDark = Color(0xFF1E1E1E)
+
+val FoodBackground = Color(0xFFFAFAFA)
+val FoodSurface = Color(0xFFFFFFFF)
+
+val FoodPrimaryDark = Color(0xFFFF8A65)
+val FoodSecondaryDark = Color(0xFFFFD54F)

@@ -74,6 +74,10 @@ class PlatilloViewModel : ViewModel() {
         carrito.add(platillo)
     }
 
+    fun eliminarDelCarrito(platillo: Platillo){
+        carrito.remove(platillo)
+    }
+
     fun vaciarCarrito(){
         carrito.clear()
     }

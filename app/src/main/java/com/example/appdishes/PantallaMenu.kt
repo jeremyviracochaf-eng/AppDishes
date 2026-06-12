@@ -1,31 +1,21 @@
 package com.example.appdishes
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -46,39 +36,43 @@ fun PantallaMenu(
         mutableStateOf("Todos")
     }
 
+    val categorias = listOf("Todos", "Pizzas", "Hamburguesas")
+
     val listaFiltrada = when (filtroSeleccionado) {
-
-        "Pizzas" ->
-            viewModel.platillos.filter {
-                it.categoria == "Pizzas"
-            }
-
-        "Hamburguesas" ->
-            viewModel.platillos.filter {
-                it.categoria == "Hamburguesas"
-            }
-
-        else ->
-            viewModel.platillos
+        "Pizzas" -> viewModel.platillos.filter { it.categoria == "Pizzas" }
+        "Hamburguesas" -> viewModel.platillos.filter { it.categoria == "Hamburguesas" }
+        else -> viewModel.platillos
     }
 
     Scaffold(
-
         topBar = {
-
             TopAppBar(
                 title = {
-                    Text("Hola, $nombre")
-                }
+                    Column {
+                        Text(
+                            text = "BiteBox",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Black,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Text(
+                            text = "Hola, $nombre",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                )
             )
         },
-
         floatingActionButton = {
-
             FloatingActionButton(
-                onClick = {
-                    navController.navigate("carrito")
-                }
+                onClick = { navController.navigate("carrito") },
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                shape = CircleShape
             ) {
                 Icon(
                     imageVector = Icons.Default.ShoppingCart,
@@ -86,61 +80,47 @@ fun PantallaMenu(
                 )
             }
         }
-
     ) { paddingValues ->
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp)
         ) {
 
-            Text(
-                text = "Menú BiteBox",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Spacer(modifier = Modifier.height(8.dp))
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-
-                Button(
-                    onClick = {
-                        filtroSeleccionado = "Todos"
-                    }
-                ) {
-                    Text("Todos")
-                }
-
-                Button(
-                    onClick = {
-                        filtroSeleccionado = "Pizzas"
-                    }
-                ) {
-                    Text("Pizzas")
-                }
-
-                Button(
-                    onClick = {
-                        filtroSeleccionado = "Hamburguesas"
-                    }
-                ) {
-                    Text("Hamburguesas")
+                items(categorias) { categoria ->
+                    val seleccionado = filtroSeleccionado == categoria
+                    FilterChip(
+                        selected = seleccionado,
+                        onClick = { filtroSeleccionado = categoria },
+                        label = { Text(categoria) },
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = MaterialTheme.colorScheme.primary,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimary
+                        ),
+                        shape = RoundedCornerShape(12.dp)
+                    )
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(bottom = 80.dp)
             ) {
-
                 items(listaFiltrada) { platillo ->
-
                     ItemPlatillo(
                         platillo = platillo,
                         navController = navController
@@ -156,30 +136,32 @@ fun ItemPlatillo(
     platillo: Platillo,
     navController: NavController
 ) {
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-
-                navController.navigate(
-                    "detalles/${platillo.id}"
-                )
+                navController.navigate("detalles/${platillo.id}")
             },
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp
+            defaultElevation = 2.dp
         )
     ) {
-
         Row(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-
             AsyncImage(
                 model = platillo.urlImagen,
                 contentDescription = platillo.nombre,
                 modifier = Modifier
-                    .size(100.dp),
+                    .size(100.dp)
+                    .clip(RoundedCornerShape(16.dp)),
                 contentScale = ContentScale.Crop
             )
 
@@ -188,28 +170,45 @@ fun ItemPlatillo(
                     .padding(start = 16.dp)
                     .weight(1f)
             ) {
-
                 Text(
                     text = platillo.nombre,
-                    fontSize = 20.sp,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
-
                 Text(
-                    text = "Categoría: ${platillo.categoria}",
-                    style = MaterialTheme.typography.bodyMedium
+                    text = platillo.categoria,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(
-                    text = "$${platillo.precio}",
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "$${platillo.precio}",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.ExtraBold
+                    )
+                    
+                    Surface(
+                        shape = CircleShape,
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        modifier = Modifier.size(32.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ShoppingCart,
+                            contentDescription = null,
+                            modifier = Modifier.padding(6.dp),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
             }
         }
     }
